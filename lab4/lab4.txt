@@ -1,0 +1,6 @@
+-The stack is a region of memory used for storing local variables and function call information.The heap is a region of memory used for dynamic memory allocation.
+-item and sc
+- Vase, Painting and Statue
+-Because this method is defined in Vase class. If we don’t cast the compiler don’t know what method to choose and cause error
+-ClassCastException
+-input and output
