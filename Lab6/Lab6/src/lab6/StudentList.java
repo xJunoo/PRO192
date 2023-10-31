@@ -1,69 +1,68 @@
 package lab6;
 
 import java.util.ArrayList;
+import lab6.Inputter;
+import lab6.Student;
 
-/**
- *
- * @author TungDuy
- */
-public class StudentList extends ArrayList<Student>{
-    public StudentList(){
-        super();
+public class StudentList {
+    private ArrayList<Student> listStudents;
+
+    public StudentList() {
+        listStudents = new ArrayList<>();
     }
-    
+
     public Student search(String code) {
         code = code.trim().toUpperCase();
-        for (int i =0; i<this.size(); i++) {
-            if (this.get(i).getCode().equals(code)) {
-                return this.get(i);
+        for (int i = 0; i < listStudents.size(); i++) {
+            if (listStudents.get(i).getCode().equals(code)) {
+                return listStudents.get(i);
             }
         }
         return null;
     }
-    
+
     private boolean isCodeDuplicated(String code) {
         code = code.trim().toUpperCase();
-        return this.search(code) !=null;
+        return search(code) != null;
     }
-    
+
     public void addStudent() {
-    String newCode = null;
-    String newName = null;
-    int newMark = 0;
-        
-    boolean codeDuplicated = true;
-        
-    while (codeDuplicated) {
-        newCode = Inputter.inputPattern("St. code S000: ", "[sS][\\d]{3}");
-        newCode = newCode.trim().toUpperCase();
-        codeDuplicated = isCodeDuplicated(newCode);
+        String newCode = null;
+        String newName = null;
+        int newMark = 0;
 
-        if (codeDuplicated) {
-            System.out.println("Code is duplicated!");
-        } 
+        boolean codeDuplicated = true;
+
+        while (codeDuplicated) {
+            newCode = Inputter.inputPattern("St. code S000: ", "[sS][\\d]{3}");
+            newCode = newCode.trim().toUpperCase();
+            codeDuplicated = isCodeDuplicated(newCode);
+
+            if (codeDuplicated) {
+                System.out.println("Code is duplicated!");
+            }
+        }
+
+        newName = Inputter.inputNonBlankStr("Name of new student: ");
+        newName = newName.toUpperCase();
+        newMark = Inputter.InputInt("Mark: ", 0, 10);
+
+        Student newStudent = new Student(newCode, newName, newMark);
+
+        listStudents.add(newStudent);
+
+        System.out.println("Student " + newCode + " has been added.");
     }
 
-    newName = Inputter.inputNonBlankStr("Name of new student: ");
-    newName = newName.toUpperCase();
-    newMark = Inputter.InputInt("Mark: ", 0, 10);
-
-    Student newStudent = new Student(newCode, newName, newMark);
-
-    this.add(newStudent);
-
-    System.out.println("Student " + newCode + " has been added.");
-}
-    
-    
     public void searchStudent() {
-        if (this.isEmpty()) {
+        if (listStudents.isEmpty()) {
             System.out.println("Empty list. No search can be performed!");
         } else {
             String searchCode = Inputter.inputStr("Input student code for search: ");
-            Student student = this.search(searchCode);
+            Student student = search(searchCode);
 
-            if (student != null) {
-                System.out.println("Student " + searchCode + " doesn't existed!");
+            if (student == null) {
+                System.out.println("Student " + searchCode + " doesn't exist!");
             } else {
                 System.out.println("Found: " + student);
             }
@@ -71,22 +70,20 @@ public class StudentList extends ArrayList<Student>{
     }
 
     public void updateStudent() {
-        if (this.isEmpty()) {
+        if (listStudents.isEmpty()) {
             System.out.println("Empty list. No update can be performed!");
         } else {
-            String updateCode = Inputter.inputStr("Input code of updated student: ");
-            Student student = this.search(updateCode);
+            String updateCode = Inputter.inputStr("Input code of the student to update: ");
+            Student student = search(updateCode);
 
             if (student == null) {
-                System.out.println("Student " + updateCode + " doesn't existed!");
+                System.out.println("Student " + updateCode + " doesn't exist!");
             } else {
                 String msg = "Old name: " + student.getName() + ", new name: ";
-
                 String newName = Inputter.inputNonBlankStr(msg);
                 student.setName(newName);
 
                 msg = "Old mark: " + student.getMark() + ", new mark 0..10: ";
-
                 int newMark = Inputter.InputInt(msg, 0, 10);
                 student.setMark(newMark);
 
@@ -96,33 +93,31 @@ public class StudentList extends ArrayList<Student>{
     }
 
     public void removeStudent() {
-        if (this.isEmpty()) {
-            System.out.println("Empty list");
+        if (listStudents.isEmpty()) {
+            System.out.println("Empty list.");
         } else {
-            String removeCode = Inputter.inputStr("Input code of removed student: ");
-            Student student = this.search(removeCode);
+            String removeCode = Inputter.inputStr("Input code of the student to remove: ");
+            Student student = search(removeCode);
 
             if (student == null) {
-                System.out.println("Student " + removeCode + " doesn't existed!");
+                System.out.println("Student " + removeCode + " doesn't exist!");
             } else {
-                this.remove(student);
-
+                listStudents.remove(student);
                 System.out.println("Student " + removeCode + " has been removed.");
             }
         }
     }
 
     public void printAll() {
-        if (this.isEmpty()) {
+        if (listStudents.isEmpty()) {
             System.out.println("Empty list.");
         } else {
             System.out.println("Student list: ");
-
-            for (Student student : this) {
+            for (Student student : listStudents) {
                 System.out.println(student);
             }
 
-            System.out.println("Total: " + this.size() + " student(s).");
+            System.out.println("Total: " + listStudents.size() + " student(s).");
         }
     }
 }
