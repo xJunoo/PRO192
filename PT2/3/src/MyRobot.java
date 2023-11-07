@@ -35,7 +35,7 @@ public class MyRobot implements IRobot{
 
     @Override
     public void f3(List<Robot> t) {
-        Collections.sort(t.subList(1, 3), (Robot rb1, Robot rb2) -> {
+        Collections.sort(t.subList(1, 4), (Robot rb1, Robot rb2) -> {
             if (rb1.getLabel().equals(rb2.getLabel())){
                 return rb2.getStep()- rb1.getStep();
             }

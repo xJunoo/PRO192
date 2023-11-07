@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author Tung Duy
  */
 class MyString implements IString {
-
+    
     @Override
     public int f1(String str) {
         String[] words = str.split(" ");
@@ -37,6 +37,7 @@ class MyString implements IString {
         }
         return result;
     }
+    
     public static boolean isPalindrome(String word) {
         String reversed = new StringBuilder(word).reverse().toString();
         return word.equals(reversed);
